@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using asp_core_lmyc.Data;
 using asp_core_lmyc.Models;
 using asp_core_lmyc.Services;
+using LmycWeb.Data;
 
 namespace asp_core_lmyc
 {
@@ -37,6 +39,7 @@ namespace asp_core_lmyc
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

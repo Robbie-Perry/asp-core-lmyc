@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using asp_core_lmyc.Models;
+using LmycWeb.Models;
 
 namespace asp_core_lmyc.Data
 {
@@ -14,6 +15,8 @@ namespace asp_core_lmyc.Data
             : base(options)
         {
         }
+
+        public DbSet<Boat> Boats { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
