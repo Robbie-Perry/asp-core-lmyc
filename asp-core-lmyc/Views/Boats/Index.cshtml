@@ -43,7 +43,7 @@
                 @Html.DisplayFor(modelItem => item.BoatName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Picture)
+                <img width="100" src="@Html.DisplayFor(modelItem => item.Picture)">
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.LengthInFeet)
@@ -58,7 +58,7 @@
                 @Html.DisplayFor(modelItem => item.RecordCreationDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
+                @Html.DisplayFor(modelItem => item.ApplicationUser.FirstName)  @Html.DisplayFor(modelItem => item.ApplicationUser.LastName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.BoatId">Edit</a> |

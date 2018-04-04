@@ -1,6 +1,7 @@
 ﻿using asp_core_lmyc.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,12 +14,14 @@ namespace LmycWeb.Models
         public int BoatId { get; set; }
 
         [Required]
+        [DisplayName("Boat Name")]
         public string BoatName { get; set; }
 
         [Required]
         public string Picture { get; set; }
 
         [Required]
+        [DisplayName("Length (ft)")]
         public int LengthInFeet { get; set; }
 
         [Required]
@@ -29,11 +32,13 @@ namespace LmycWeb.Models
 
         [Required]
         [DataType(DataType.Date)]
+        [DisplayName("Record Creation Date")]
         public DateTime RecordCreationDate { get; set; }
 
         [Required]
         public string ApplicationUserId { get; set; }
 
+        [DisplayName("Added By")]
         public ApplicationUser ApplicationUser { get; set; }
 
         public Boat()
