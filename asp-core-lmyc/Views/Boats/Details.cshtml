@@ -20,7 +20,7 @@
             @Html.DisplayNameFor(model => model.Picture)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Picture)
+            <img width="100" src="@Html.DisplayFor(model => model.Picture)">
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.LengthInFeet)
@@ -50,7 +50,7 @@
             @Html.DisplayNameFor(model => model.ApplicationUser)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ApplicationUser.Id)
+            @Html.DisplayFor(model => model.ApplicationUser.FirstName)  @Html.DisplayFor(model => model.ApplicationUser.LastName)
         </dd>
     </dl>
 </div>

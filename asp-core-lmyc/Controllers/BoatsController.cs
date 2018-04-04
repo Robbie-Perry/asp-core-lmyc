@@ -48,6 +48,7 @@ namespace asp_core_lmyc.Controllers
         }
 
         // GET: Boats/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             ViewData["ApplicationUserId"] = new SelectList(_context.Users, "Id", "Id");
@@ -59,6 +60,7 @@ namespace asp_core_lmyc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("BoatId,BoatName,Picture,LengthInFeet,Make,Year,RecordCreationDate,ApplicationUserId")] Boat boat)
         {
             boat.RecordCreationDate = DateTime.Now;
@@ -74,6 +76,7 @@ namespace asp_core_lmyc.Controllers
         }
 
         // GET: Boats/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -95,6 +98,7 @@ namespace asp_core_lmyc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("BoatId,BoatName,Picture,LengthInFeet,Make,Year,RecordCreationDate,ApplicationUserId")] Boat boat)
         {
             if (id != boat.BoatId)
@@ -127,6 +131,7 @@ namespace asp_core_lmyc.Controllers
         }
 
         // GET: Boats/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -148,6 +153,7 @@ namespace asp_core_lmyc.Controllers
         // POST: Boats/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var boat = await _context.Boats.SingleOrDefaultAsync(m => m.BoatId == id);
