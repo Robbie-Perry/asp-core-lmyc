@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LmycWeb.Models;
 using asp_core_lmyc.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace asp_core_lmyc.Controllers
 {
+    [Authorize]
     public class BoatsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -59,12 +61,14 @@ namespace asp_core_lmyc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("BoatId,BoatName,Picture,LengthInFeet,Make,Year,RecordCreationDate,ApplicationUserId")] Boat boat)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(boat);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+            boat.RecordCreationDate = DateTime.Now;
+            boat.ApplicationUser = _context.Users.FirstOrDefault(
+                u => u.UserName == User.Identity.Name
+            );
+            _context.Add(boat);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+            
             ViewData["ApplicationUserId"] = new SelectList(_context.Users, "Id", "Id", boat.ApplicationUserId);
             return View(boat);
         }
