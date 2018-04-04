@@ -13,33 +13,83 @@ using asp_core_lmyc.Data;
 using asp_core_lmyc.Models;
 using asp_core_lmyc.Services;
 using LmycWeb.Data;
+using AspNet.Security.OpenIdConnect.Primitives;
 
 namespace asp_core_lmyc
 {
     public class Startup
     {
+
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
+
+            services.AddCors();
+
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            {
+                // local database
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                // test database
+                //options.UseSqlServer(Configuration.GetConnectionString("TestConnection"));
+                options.UseOpenIddict();
+            });
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            // Register the OAuth2 validation handler.
+            services.AddAuthentication()
+                .AddOAuthValidation();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.ClaimsIdentity.UserNameClaimType = OpenIdConnectConstants.Claims.Name;
+                options.ClaimsIdentity.UserIdClaimType = OpenIdConnectConstants.Claims.Subject;
+                options.ClaimsIdentity.RoleClaimType = OpenIdConnectConstants.Claims.Role;
+            });
+
+            // Register the OpenIddict services.
+            // Note: use the generic overload if you need
+            // to replace the default OpenIddict entities.
+            services.AddOpenIddict(options =>
+            {
+                // Register the Entity Framework stores.
+                options.AddEntityFrameworkCoreStores<ApplicationDbContext>();
+
+                // Register the ASP.NET Core MVC binder used by OpenIddict.
+                // Note: if you don't call this method, you won't be able to
+                // bind OpenIdConnectRequest or OpenIdConnectResponse parameters.
+                options.AddMvcBinders();
+
+                // Enable the token endpoint (required to use the password flow).
+                options.EnableTokenEndpoint("/connect/token");
+
+                // Allow client applications to use the grant_type=password flow.
+                options.AllowPasswordFlow();
+
+                // During development, you can disable the HTTPS requirement.
+                options.DisableHttpsRequirement();
+            });
+
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
-            services.AddMvc();
-
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireLogin", policy => policy.RequireRole("Admin", "Member"));
+                options.AddPolicy("RequireAdmin", policy => policy.RequireRole("Admin"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +107,8 @@ namespace asp_core_lmyc
             }
 
             app.UseStaticFiles();
+
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200", "https://lmyc-assignment-client.azurewebsites.net").AllowAnyHeader().AllowAnyMethod().AllowCredentials());
 
             app.UseAuthentication();
 
