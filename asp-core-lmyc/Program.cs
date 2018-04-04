@@ -4,9 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using asp_core_lmyc.Data;
+using asp_core_lmyc.Models;
 using LmycWeb.Data;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -25,7 +27,12 @@ namespace asp_core_lmyc
                 try
                 {
                     var context = services.GetRequiredService<ApplicationDbContext>();
-                    SeedData.Initialize(context);//<---Do your seeding here
+                    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+                    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                    
+                    SeedData.SeedRoles(roleManager);
+                    SeedData.SeedUsers(userManager);
+                    SeedData.SeedBoats(context);
                 }
                 catch (Exception ex)
                 {
