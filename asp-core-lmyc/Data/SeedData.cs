@@ -69,7 +69,7 @@ namespace LmycWeb.Data
                 ApplicationUser admin = new ApplicationUser()
                 {
                     Email = "a@a.a",
-                    UserName = "a@a.a",
+                    UserName = "a",
                     FirstName = "aFirst",
                     LastName = "aLast",
                     Street = "aStreet",
@@ -93,7 +93,7 @@ namespace LmycWeb.Data
                 ApplicationUser member = new ApplicationUser()
                 {
                     Email = "m@m.m",
-                    UserName = "m@m.m",
+                    UserName = "m",
                     FirstName = "mFirst",
                     LastName = "mLast",
                     Street = "mStreet",
