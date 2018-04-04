@@ -36,7 +36,7 @@ namespace asp_core_lmyc.Controllers
                 return NotFound();
             }
 
-            var boat = await _context.Boats
+            var boat = await _context.Boats 
                 .Include(b => b.ApplicationUser)
                 .SingleOrDefaultAsync(m => m.BoatId == id);
             if (boat == null)
