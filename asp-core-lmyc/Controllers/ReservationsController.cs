@@ -77,6 +77,7 @@ namespace asp_core_lmyc.Controllers
             return View(reservation);
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Reservations/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -98,6 +99,7 @@ namespace asp_core_lmyc.Controllers
         // POST: Reservations/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ReservationId,ReservedBy,StartDate,EndDate,BoatId")] Reservation reservation)
@@ -133,6 +135,7 @@ namespace asp_core_lmyc.Controllers
         }
 
         // GET: Reservations/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -155,6 +158,7 @@ namespace asp_core_lmyc.Controllers
         // POST: Reservations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var reservation = await _context.Reservation.SingleOrDefaultAsync(m => m.ReservationId == id);
