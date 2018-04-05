@@ -27,5 +27,7 @@ namespace asp_core_lmyc.Data
         }
 
         public DbSet<asp_core_lmyc.Models.ApplicationUser> ApplicationUser { get; set; }
+
+        public DbSet<LmycWeb.Models.Reservation> Reservation { get; set; }
     }
 }
