@@ -1,0 +1,30 @@
+<h1>Boats</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+<p *ngIf="!boats"><em>Loading...</em></p>
+
+<table class='table' *ngIf="boats">
+  <thead>
+    <tr>
+      <th>Boat ID</th>
+      <th>Boat Name</th>
+      <th>Picture</th>
+      <th>Length In Feet</th>
+      <th>Make</th>
+      <th>Year</th>
+      <th>Record Creation Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let boat of boats">
+      <td>{{ boat.boatId }}</td>
+      <td>{{ boat.boatName }}</td>
+      <td><img src='{{ boat.picture }}' style="width: 100px;"></td>
+      <td>{{ boat.lengthInFeet }}</td>
+      <td>{{ boat.make }}</td>
+      <td>{{ boat.year }}</td>
+      <td>{{ boat.recordCreationDate }}</td>
+    </tr>
+  </tbody>
+</table>

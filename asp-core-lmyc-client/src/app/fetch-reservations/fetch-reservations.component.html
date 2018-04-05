@@ -1,0 +1,26 @@
+<h1>Reservations</h1>
+
+<p>This component demonstrates fetching from the server.</p>
+
+<p *ngIf="!reservations"><em>Loading...</em></p>
+
+<table class='table' *ngIf="reservations">
+  <thead>
+    <tr>
+      <th>User Name</th>      
+      <th>Reservation Id</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>Boat Id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let res of reservations">
+      <td>{{ res.userName }}</td>      
+      <td>{{ res.reservationId }}</td>
+      <td>{{ res.startDate }}</td>
+      <td>{{ res.endDate }}</td>
+      <td>{{ res.boatId }}</td>
+    </tr>
+  </tbody>
+</table>
