@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LmycWeb.Models;
 using asp_core_lmyc.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace asp_core_lmyc.Controllers.Api
 {
     [Produces("application/json")]
     [Route("api/BoatsAPI")]
+    [Authorize(Policy = "RequireLogin")]
     public class BoatsAPIController : Controller
     {
         private readonly ApplicationDbContext _context;

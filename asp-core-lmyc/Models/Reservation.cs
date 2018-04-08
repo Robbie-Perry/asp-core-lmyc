@@ -28,6 +28,8 @@ namespace LmycWeb.Models
 
         public ApplicationUser User { get; set; }
 
+        public string UserName { get; set; }
+
         [ForeignKey("Boat")]
         public int BoatId { get; set; }
 
