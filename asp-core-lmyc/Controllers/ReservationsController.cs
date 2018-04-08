@@ -68,6 +68,7 @@ namespace asp_core_lmyc.Controllers
             if (ModelState.IsValid)
             {
                 reservation.User = _userManager.GetUserAsync(HttpContext.User).Result;
+                reservation.UserName = reservation.User.UserName;
                 _context.Add(reservation);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

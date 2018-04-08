@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -12,21 +7,18 @@ using Microsoft.Extensions.DependencyInjection;
 using asp_core_lmyc.Data;
 using asp_core_lmyc.Models;
 using asp_core_lmyc.Services;
-using LmycWeb.Data;
 using AspNet.Security.OpenIdConnect.Primitives;
 
 namespace asp_core_lmyc
 {
     public class Startup
     {
-
-        public IConfiguration Configuration { get; }
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
+        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -37,6 +29,8 @@ namespace asp_core_lmyc
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
+                // sqlite
+                //options.UseSqlite(Configuration.GetConnectionString("SqliteConnection"));
                 // local database
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
                 // test database
@@ -87,7 +81,7 @@ namespace asp_core_lmyc
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("RequireLogin", policy => policy.RequireRole("Admin", "Member"));
+                options.AddPolicy("RequireLogin", policy => policy.RequireAuthenticatedUser());
                 options.AddPolicy("RequireAdmin", policy => policy.RequireRole("Admin"));
             });
         }
