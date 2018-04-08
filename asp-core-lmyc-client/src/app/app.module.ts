@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { FetchBoatsComponent } from './fetch-boats/fetch-boats.component';
 import { FetchReservationsComponent } from './fetch-reservations/fetch-reservations.component';
 import { LoginComponent } from './login/login.component';
+import { AuthService } from './auth.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import { LoginComponent } from './login/login.component';
       { path: 'login', component: LoginComponent },
     ])
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
