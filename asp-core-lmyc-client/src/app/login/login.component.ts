@@ -21,10 +21,11 @@ export class LoginComponent implements OnInit {
 
   doLogin() {
     this.queryLogin = true;
+
     this.authService.Authenticate(this.username, this.password)
       .then(() => {
         this.queryLogin = false;
-        this.router.navigate(["/home"]);
+        this.router.navigate(["/"]);
       }).catch(r => {
         this.error = "Unable to login, " + r;
         this.queryLogin = false;

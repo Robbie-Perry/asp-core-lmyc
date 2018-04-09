@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { FetchBoatsComponent } from './fetch-boats/fetch-boats.component';
 import { FetchReservationsComponent } from './fetch-reservations/fetch-reservations.component';
 import { LoginComponent } from './login/login.component';
+import { BoatService } from './boats.service';
 import { AuthService } from './auth.service';
 
 @NgModule({
@@ -23,7 +24,7 @@ import { AuthService } from './auth.service';
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-    HttpClientModule,
+    HttpModule,
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -32,7 +33,10 @@ import { AuthService } from './auth.service';
       { path: 'login', component: LoginComponent },
     ])
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    BoatService
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
