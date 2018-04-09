@@ -4,6 +4,10 @@
  * the license and the contributors participating to this project.
  */
 
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using asp_core_lmyc.Models;
 using AspNet.Security.OpenIdConnect.Extensions;
 using AspNet.Security.OpenIdConnect.Primitives;
@@ -11,19 +15,16 @@ using AspNet.Security.OpenIdConnect.Server;
 using LmycWeb.Helpers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Mvc.Server.ViewModels.Authorization;
 using OpenIddict.Core;
 using OpenIddict.Models;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
-
-namespace asp_core_lmyc.Controllers
+namespace asp_core_lmyc.Server
 {
+    [EnableCors("CorsPolicy")]
     public class AuthorizationController : Controller
     {
         private readonly OpenIddictApplicationManager<OpenIddictApplication> _applicationManager;

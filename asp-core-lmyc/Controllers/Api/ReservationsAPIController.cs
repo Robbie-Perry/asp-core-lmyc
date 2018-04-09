@@ -7,12 +7,14 @@ using LmycWeb.Models;
 using asp_core_lmyc.Data;
 using Microsoft.AspNetCore.Authorization;
 using AspNet.Security.OAuth.Validation;
+using Microsoft.AspNetCore.Cors;
 
 namespace asp_core_lmyc.Controllers.Api
 {
     [Produces("application/json")]
     [Authorize(Policy = "RequireLogin", AuthenticationSchemes = OAuthValidationDefaults.AuthenticationScheme)]
     [Route("api/ReservationsAPI")]
+    [EnableCors("CorsPolicy")]
     public class ReservationsAPIController : Controller
     {
         private readonly ApplicationDbContext _context;

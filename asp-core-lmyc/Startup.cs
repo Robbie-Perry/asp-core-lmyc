@@ -25,19 +25,33 @@ namespace asp_core_lmyc
         {
             services.AddMvc();
 
-            services.AddCors();
+            //services.AddCors();
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 // sqlite
                 //options.UseSqlite(Configuration.GetConnectionString("SqliteConnection"));
+
                 // local database
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+
                 // test database
                 //options.UseSqlServer(Configuration.GetConnectionString("TestConnection"));
+                 
                 options.UseOpenIddict();
             });
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials()
+                    );
+            });
+
+            // Register the Identity services.
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
@@ -66,15 +80,19 @@ namespace asp_core_lmyc
                 // bind OpenIdConnectRequest or OpenIdConnectResponse parameters.
                 options.AddMvcBinders();
 
-                // Enable the token endpoint (required to use the password flow).
-                options.EnableTokenEndpoint("/connect/token");
+                // Enable the authorization and token endpoints (required to use the code flow).
+                options.EnableAuthorizationEndpoint("/connect/authorize")
+                       .EnableTokenEndpoint("/connect/token");
+
+                // Allow client applications to use the code flow.
+                options.AllowAuthorizationCodeFlow();
 
                 // Allow client applications to use the grant_type=password flow.
                 options.AllowPasswordFlow();
 
                 // During development, you can disable the HTTPS requirement.
                 options.DisableHttpsRequirement();
-            });
+            }); 
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
@@ -89,10 +107,11 @@ namespace asp_core_lmyc
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
-                app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
+                app.UseBrowserLink();
                 app.UseDatabaseErrorPage();
             }
             else
@@ -101,8 +120,6 @@ namespace asp_core_lmyc
             }
 
             app.UseStaticFiles();
-
-            app.UseCors(builder => builder.WithOrigins("http://localhost:4200", "https://lmyc-assignment-client.azurewebsites.net").AllowAnyHeader().AllowAnyMethod().AllowCredentials());
 
             app.UseAuthentication();
 

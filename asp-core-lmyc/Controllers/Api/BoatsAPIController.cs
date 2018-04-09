@@ -6,12 +6,16 @@ using Microsoft.EntityFrameworkCore;
 using LmycWeb.Models;
 using asp_core_lmyc.Data;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using AspNet.Security.OAuth.Validation;
+using Microsoft.AspNetCore.Cors;
 
 namespace asp_core_lmyc.Controllers.Api
 {
     [Produces("application/json")]
     [Route("api/BoatsAPI")]
-    [Authorize(Policy = "RequireLogin")]
+    [EnableCors("CorsPolicy")]
+    [Authorize(AuthenticationSchemes = OAuthValidationDefaults.AuthenticationScheme)]
     public class BoatsAPIController : Controller
     {
         private readonly ApplicationDbContext _context;

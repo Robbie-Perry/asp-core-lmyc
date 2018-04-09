@@ -1,0 +1,4 @@
+{
+    "boatsUrl": "api/boatsapi",
+    "reservationsUrl": "api/reservationsapi"
+}
