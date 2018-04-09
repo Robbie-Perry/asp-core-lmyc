@@ -30,10 +30,10 @@ namespace asp_core_lmyc
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 // sqlite
-                //options.UseSqlite(Configuration.GetConnectionString("SqliteConnection"));
+                options.UseSqlite(Configuration.GetConnectionString("SqliteConnection"));
 
                 // local database
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
 
                 // test database
                 //options.UseSqlServer(Configuration.GetConnectionString("TestConnection"));
