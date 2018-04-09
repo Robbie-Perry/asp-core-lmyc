@@ -8,6 +8,7 @@ using asp_core_lmyc.Data;
 using asp_core_lmyc.Models;
 using asp_core_lmyc.Services;
 using AspNet.Security.OpenIdConnect.Primitives;
+using LmycWeb.Data;
 
 namespace asp_core_lmyc
 {
@@ -105,8 +106,14 @@ namespace asp_core_lmyc
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager,
+            ApplicationDbContext context)
         {
+            SeedData.SeedRoles(roleManager);
+            SeedData.SeedUsers(userManager);
+            SeedData.SeedBoats(context);
 
             if (env.IsDevelopment())
             {
