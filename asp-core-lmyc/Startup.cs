@@ -113,7 +113,6 @@ namespace asp_core_lmyc
         {
             SeedData.SeedRoles(roleManager);
             SeedData.SeedUsers(userManager);
-            SeedData.SeedBoats(context);
 
             if (env.IsDevelopment())
             {
