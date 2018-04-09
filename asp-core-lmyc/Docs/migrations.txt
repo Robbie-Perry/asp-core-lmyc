@@ -1,0 +1,3 @@
+﻿(deleted entire migrations folder)
+add-migration InitialMigration
+update-database
